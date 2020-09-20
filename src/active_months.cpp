@@ -18,12 +18,11 @@
 // fill out the active months structure,
 // setting all the months to be active
 ActiveMonths::ActiveMonths() 
-: month_activity{}
+: active_months{}
 {
-    for (int i = 0; i < this->month_names.size(); i++)
+    for (int i = 1; i <= 12; i++)
     {
-        int month_index = i + 1;
-        this->month_activity[month_index] = true;
+        this->active_months[i] = true;
     }
 }
 
@@ -31,14 +30,13 @@ ActiveMonths::ActiveMonths()
 // fill out the active months structure,
 // setting only the specified months to be active
 ActiveMonths::ActiveMonths(vector<int> months)
-: month_activity{}
+: active_months{}
 {
-    for (int i = 0; i < this->month_names.size(); i++)
+    for (int i = 1; i <= 12; i++)
     {
-        int month_index = i + 1;
-        vector<int>::iterator find_result = find(months.begin(), months.end(), month_index);
+        vector<int>::iterator find_result = find(months.begin(), months.end(), i);
         bool is_found = (find_result != months.end()) ? true : false;
-        this->month_activity[month_index] = is_found;
+        this->active_months[i] = is_found;
     }
 }
 
@@ -51,9 +49,9 @@ string ActiveMonths::get_month_name(int month_index) const
 
 // IS MONTH ACTIVE
 // return a bool indicating if the given month is active or not
-bool ActiveMonths::get_month_activity(int month_index) const
+bool ActiveMonths::is_month_active(int month_index) const
 {
-    return this->month_activity.at(month_index);
+    return this->active_months.at(month_index);
 }
 
 
@@ -61,15 +59,14 @@ bool ActiveMonths::get_month_activity(int month_index) const
 
 // OVERLOADED OSTREAM OPERATOR
 // print the ActiveMonths object 
-ostream &operator<<(ostream &output, const ActiveMonths &m) 
+ostream &operator<<(ostream &output, const ActiveMonths &am) 
 {
     string months = "";
-    for (int i = 0; i < 12; i++) 
+    for (int i = 1; i <= 12; i++) 
     {
-        int month_index = i + 1;
-        if (m.get_month_activity(month_index))
+        if (am.is_month_active(i))
         {
-            months+= m.get_month_name(month_index) + ", ";
+            months+= am.get_month_name(i) + ", ";
         }
     }
     months.pop_back();

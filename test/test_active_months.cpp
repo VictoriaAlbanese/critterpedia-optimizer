@@ -1,10 +1,9 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
 // Programmer : Victoria Albanese
-//   Filename : active_months.cpp
+//   Filename : test_active_months.cpp
 //
-//    Purpose : To represent the active months of an animal
-//              in Animal Crossing New Horizons  
+//    Purpose : To test the active_months class
 //
 ////////////////////////////////////////////////////////////////////////////////
 
@@ -25,10 +24,9 @@ TEST(ActiveMonthsTest, DefaultConstructor)
 { 
     ActiveMonths active_months;
     
-    for (int i = 0; i < 12; i++)
+    for (int i = 1; i <= 12; i++)
     {
-        int month_index = i + 1;
-        ASSERT_EQ(true, active_months.get_month_activity(month_index));
+        ASSERT_EQ(true, active_months.is_month_active(i));
     }   
 }
 
@@ -43,16 +41,15 @@ TEST(ActiveMonthsTest, CustomConstructor)
     months.push_back(12); 
     ActiveMonths active_months(months);
      
-    for (int i = 0; i < 12; i++)
+    for (int i = 1; i <= 12; i++)
     {
-        int month_index = i + 1;
-        if (month_index % 2 == 0) 
+        if (i % 2 == 0) 
         {
-            ASSERT_EQ(true, active_months.get_month_activity(month_index));
+            ASSERT_EQ(true, active_months.is_month_active(i));
         }
         else
         {
-            ASSERT_EQ(false, active_months.get_month_activity(month_index));
+            ASSERT_EQ(false, active_months.is_month_active(i));
         }
     }   
 }

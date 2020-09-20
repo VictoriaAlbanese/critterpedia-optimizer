@@ -30,7 +30,7 @@ class ActiveMonths
     private:
 
         static map<int, string> month_names;
-        map<int, bool> month_activity;        
+        map<int, bool> active_months;        
 
 
     public:
@@ -39,7 +39,7 @@ class ActiveMonths
         ActiveMonths(vector<int> months);
 
         string get_month_name(int month_index) const;
-        bool get_month_activity(int month_index) const;
+        bool is_month_active(int month_index) const;
 
         friend ostream &operator<<(ostream &output, const ActiveMonths &months);
 };
