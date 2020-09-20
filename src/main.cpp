@@ -9,6 +9,8 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include <iostream>
+
+#include "active_hours.hpp"
 #include "active_months.hpp"
 
 using std::cout;
@@ -21,8 +23,10 @@ using std::endl;
 int main(int argc, char * argv[]) 
 {
     ActiveMonths active_months;
+    ActiveHours active_hours;
 
-    cout << active_months << endl;
+    cout << "Active Months : " << active_months << endl;
+    cout << "Active Hours : " << active_hours << endl;
 
     return 0;
 }
