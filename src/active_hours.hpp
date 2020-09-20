@@ -8,6 +8,9 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
+#ifndef ACTIVE_HOURS_H
+#define ACTIVE_HOURS_H
+
 #include <algorithm>
 #include <iostream>
 #include <map>
@@ -42,5 +45,7 @@ class ActiveHours
 
         friend ostream &operator<<(ostream &output, const ActiveHours &h);
 };
+
+#endif // ACTIVE_HOURS_H
 
 ////////////////////////////////////////////////////////////////////////////////
