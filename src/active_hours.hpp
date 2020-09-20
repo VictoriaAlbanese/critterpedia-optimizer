@@ -13,10 +13,13 @@
 #include <map>
 #include <string>
 #include <vector>
+#include <utility>
 
 using std::find;
+using std::make_pair;
 using std::map;
 using std::ostream;
+using std::pair;
 using std::string;
 using std::to_string;
 using std::vector;

@@ -54,24 +54,79 @@ bool ActiveHours::is_hour_active(int hour_index) const
 // print the ActiveMonths object 
 ostream &operator<<(ostream &output, const ActiveHours &ah)
 {
-    string hours = "";
+    vector<pair<int, int>> ranges;
+    bool processing_range = false;
+    int start_hour;
+    int end_hour;
     for (int i = 1; i <= 24; i++) 
     {
         if (ah.is_hour_active(i))
         {
-            if (i <= 12) 
+            if (processing_range == false) 
             {
-                hours+= to_string(i) + "am, ";
+                processing_range = true;
+                start_hour = i;
             }
-            else 
+            end_hour = i;
+        }
+        else
+        {
+            if (processing_range == true) 
             {
-                hours+= to_string(i - 12) + "pm, ";
+                processing_range = false;
+                ranges.push_back(make_pair(start_hour, end_hour));
             }
         }
     }
-    hours.pop_back();
-    hours.pop_back();
-    output << hours;
+
+    if (processing_range == true) 
+    {
+        ranges.push_back(make_pair(start_hour, end_hour));
+    }
+
+    if (ranges.front().first == 1 && ranges.back().second == 24)
+    {
+        if (ranges.size() == 1)
+        {
+            output << "all day";
+            return output;
+        }
+        else 
+        {
+            ranges[ranges.size() - 1].second = ranges.front().second;
+            ranges.erase(ranges.begin());
+        }
+    }
+
+    for (int i = 0; i < ranges.size(); i++) 
+    {
+        string start_time;
+        if (ranges[i].first < 12) 
+        {
+            start_time = to_string(ranges[i].first) + "am"; 
+        }
+        else 
+        {
+            start_time = to_string(ranges[i].first - 12) + "pm";
+        }
+
+        string end_time;
+        if  (ranges[i].second < 12) 
+        {
+            end_time = to_string(ranges[i].second) + "am";
+        }
+        else
+        {
+            end_time = to_string(ranges[i].second - 12) + "pm";
+        }
+
+        output << start_time << " - " << end_time;
+
+        if (i != ranges.size() - 1) 
+        {
+            output << ", ";
+        }
+    }
 
     return output;
 }

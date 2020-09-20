@@ -61,17 +61,58 @@ bool ActiveMonths::is_month_active(int month_index) const
 // print the ActiveMonths object 
 ostream &operator<<(ostream &output, const ActiveMonths &am) 
 {
-    string months = "";
+    vector<pair<string, string>> ranges;
+    bool processing_range = false;
+    string start_month;
+    string end_month;
     for (int i = 1; i <= 12; i++) 
     {
         if (am.is_month_active(i))
         {
-            months+= am.get_month_name(i) + ", ";
+            if (processing_range == false) 
+            {
+                processing_range = true;
+                start_month = am.get_month_name(i);
+            }
+            end_month = am.get_month_name(i);
+        }
+        else
+        {
+            if (processing_range == true) 
+            {
+                processing_range = false;
+                ranges.push_back(make_pair(start_month, end_month));
+            }
         }
     }
-    months.pop_back();
-    months.pop_back();
-    output << months;
+
+    if (processing_range == true) 
+    {
+        ranges.push_back(make_pair(start_month, end_month));
+    }
+
+    if (ranges.front().first == "January" && ranges.back().second == "December")
+    {
+        if (ranges.size() == 1)
+        {
+            output << "all year";
+            return output;
+        }
+        else 
+        {
+            ranges[ranges.size() - 1].second = ranges.front().second;
+            ranges.erase(ranges.begin());
+        }
+    }
+
+    for (int i = 0; i < ranges.size(); i++) 
+    {
+        output << ranges[i].first << " - " << ranges[i].second;
+        if (i != ranges.size() - 1) 
+        {
+            output << ", ";
+        }
+    }
 
     return output;
 }
